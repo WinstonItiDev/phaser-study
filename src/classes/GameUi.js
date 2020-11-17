@@ -29,9 +29,9 @@ export class GameUi extends Phaser.GameObjects.Rectangle {
         this.setStrokeStyle(4, 0xefc53f);
         this.setFillStyle(this.normalFill, 1)
             .setInteractive()
-            .on('pointerover', () => {
-                scene.events.emit('CHANGE_BUTTON', { setIndex: index})
-            })
+            // .on('pointerover', () => {
+            //     scene.events.emit('CHANGE_BUTTON', { setIndex: index})
+            // })
 
         this.setStyleActive(index === 0)
     }
