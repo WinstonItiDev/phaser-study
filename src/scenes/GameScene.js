@@ -17,7 +17,7 @@ export class GameScene extends Phaser.Scene {
 
         this.input.keyboard.on('keydown', event => {
             switch (event.key) {
-                case 'ArrowLeft':
+                case 'ArrowLeftc':
                     activeRect -= 1
                     _this.events.emit('CHANGE_BUTTON')
                     break
