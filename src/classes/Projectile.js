@@ -10,6 +10,10 @@ export class Projectile {
         this.create = this.create.bind(this)
 
         this.update = this.update.bind(this)
+        this.setScaleX = null
+        this.setScaleY = null
+        this.setMaxSize = 4
+
         // this.bulletClass = new Phaser.Class(initBulletClass)
         // this.entityLastFired = 0
         // this.entityBulletsGroup = scene.add.group({
@@ -31,7 +35,7 @@ export class Projectile {
 
         bullets = scene.add.group({
             classType: Bullet,
-            maxSize: 2,
+            maxSize: this.setMaxSize,
             runChildUpdate: true
         })
 
@@ -54,14 +58,12 @@ export class Projectile {
         
           if (isMouseDown == true && time > lastFired) {
               let bullet = bullets.get();
-        
               if (bullet){
                   bullet.fire(px, py);
-                  bullet.setSize(20, 20)
+                  bullet.setScale(this.setScaleX, this.setScaleY)
                   console.log(bullet);
                   lastFired = time + 300;
               }
-
           }
 
         //   console.log(bullets.get());
@@ -98,7 +100,7 @@ let initBulletClass = {
     initialize:
   
       function Bullet(scene) {
-        Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, this.width, this.height, "0xff0000")
+        Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 6, 6, "0xff0000")
         this.bulletGroup = scene.physics.add.group({
           angularDrag: 5,
           angularVelocity: 60,

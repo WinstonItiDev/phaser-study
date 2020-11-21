@@ -41,6 +41,8 @@ export class WeaponState extends State {
 
         if (activeRect == 0) {
             console.log("active 0")
+            scene.projectile.setScaleX = 2
+            scene.projectile.setScaleY = 2
         }
 
         scene.events.addListener('CHANGE_BUTTON', (payload) => {
@@ -60,10 +62,15 @@ export class WeaponState extends State {
 
             if (activeRect == 0) {
                 console.log("active 0")
+                scene.projectile.setScaleX = 2
+                scene.projectile.setScaleY = 2
+
             }
 
             if (activeRect == 1) {
                 console.log("active 1");
+                scene.projectile.setScaleX = 20
+                scene.projectile.setScaleY = 20
             }
 
             if (activeRect == 2) {
@@ -80,8 +87,13 @@ export class WeaponState extends State {
 
         })
 
+        console.log(scene.projectile);
+
     }
 
     execute(scene) {
+        // console.log(scene.projectile.update());
+        // scene.projectile.update(scene, time, 0, 0)
+
     }
 }

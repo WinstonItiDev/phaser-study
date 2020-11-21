@@ -1,8 +1,8 @@
 
 import { StateMachine } from '../classes/state/StateMachine.js'
 import { WeaponState } from '../classes/state/WeaponState.js'
-import { Projectile } from '../classes/Projectile.js'
 // import { Player } from '../classes/Player.js'
+import { Projectile } from '../classes/Projectile.js'
 
 
 let player = null
@@ -22,13 +22,17 @@ export class GameScene extends Phaser.Scene {
         this.projectile.create(this)
         this.weaponStateMachine = new StateMachine('weaponState', {
             weaponState: new WeaponState()
-        }, [this, this.projectile])
+        }, [this])
     }
 
     update(time, delta) {
         // player.update(this, time)
         // player.handleInput(keys, delta)
         this.projectile.update(this, time, 40, 40)
+        // this.weaponStateMachine = new StateMachine('weaponState', {
+        //     weaponState: new WeaponState()
+        // }, [this, time])
+
         this.weaponStateMachine.step() 
 
     }
