@@ -1,90 +1,149 @@
 import Phaser from "phaser";
-let bullets = null
 let lastFired = 0
 let isMouseDown = false
-export class Projectile {
-    constructor() {
+
+class Projectile {
+	constructor() {
+		this.createBulletGroup = this.createBulletGroup.bind(this)
+	}
+
+	createBulletGroup(scene, bulletClass, maxSize) {
+		this.Bullet = new Phaser.Class(bulletClass)
+		this.bullets = scene.add.group({
+			classType: this.Bullet,
+			maxSize: maxSize,
+			runChildUpdate: true
+		})
+	}
+}
+
+export class FirstGunProjectile extends Projectile {
+	constructor(scene) {
+		super()
+		// create customized bullet group
+		this.createBulletGroup(scene, initBulletClass, 10)
+		// bind functions to this class
+		this.update = this.update.bind(this)
+
+	}
+
+	update(scene, time, px, py, pointer) {
+		scene.input.on('pointerdown', () => {
+			isMouseDown = true
+			
+		})
+
+		scene.input.on('pointerup', () => {
+			isMouseDown = false
+		})
+
+		if (isMouseDown == true && time > lastFired) {
+			let bullet = this.bullets.get();
+			if (bullet) {
+				bullet.fire(px, py, pointer);
+				bullet.setScale(10, 10)
+				lastFired = time + 100;
+			}
+		}
+	}
+}
+
+export class SecondGunProjectile extends Projectile {
+	constructor(scene) {
+		super()
+		// create customized bullet group
+		this.createBulletGroup(scene, initBulletClass, 3)
+		// log to see if bullet group is getting passed
+		console.log(this.getBulletGroup());
+	}
+	getBulletGroup() {
+		return this.bullets
+	}
+}
+
+// export class Projectile {
+//     constructor() {
 
 
 
-        this.create = this.create.bind(this)
+//         this.create = this.create.bind(this)
 
-        this.update = this.update.bind(this)
-        this.setScaleX = null
-        this.setScaleY = null
-        this.setMaxSize = 4
+//         this.update = this.update.bind(this)
+//         this.setScaleX = null
+//         this.setScaleY = null
+//         this.setMaxSize = 4
 
-        // this.bulletClass = new Phaser.Class(initBulletClass)
-        // this.entityLastFired = 0
-        // this.entityBulletsGroup = scene.add.group({
-        //     classType: this.bulletClass,
-        //     maxSize: 78,
-        //     runChildUpdate: true
-        // })
+//         // this.bulletClass = new Phaser.Class(initBulletClass)
+//         // this.entityLastFired = 0
+//         // this.entityBulletsGroup = scene.add.group({
+//         //     classType: this.bulletClass,
+//         //     maxSize: 78,
+//         //     runChildUpdate: true
+//         // })
 
-        // this.entityPhysicsGroup = scene.physics.add.group({})
-        // this.isShooting = true
-
-
-    }
-
-    create(scene) {
-
-        let Bullet = new Phaser.Class(initBulletClass)
+//         // this.entityPhysicsGroup = scene.physics.add.group({})
+//         // this.isShooting = true
 
 
-        bullets = scene.add.group({
-            classType: Bullet,
-            maxSize: this.setMaxSize,
-            runChildUpdate: true
-        })
+//     }
 
-        // console.log(bullets.get());
-    }
+//     create(scene) {
+
+//         let Bullet = new Phaser.Class(initBulletClass)
+
+
+//         bullets = scene.add.group({
+//             classType: Bullet,
+//             maxSize: this.setMaxSize,
+//             runChildUpdate: true
+//         })
+
+//         // console.log(bullets.get());
+//     }
 
     
-    getPlayerBullets() {
-        return bullets
-    }
+//     getPlayerBullets() {
+//         return bullets
+//     }
 
-    update(scene, time, px, py) {
-        scene.input.on('pointerdown', () => {
-            isMouseDown = true
-          })
+//     update(scene, time, px, py) {
+//         scene.input.on('pointerdown', () => {
+//             isMouseDown = true
+//           })
         
-          scene.input.on('pointerup', () => {
-            isMouseDown = false
-          })
+//           scene.input.on('pointerup', () => {
+//             isMouseDown = false
+//           })
         
-          if (isMouseDown == true && time > lastFired) {
-              let bullet = bullets.get();
-              if (bullet){
-                  bullet.fire(px, py);
-                  bullet.setScale(this.setScaleX, this.setScaleY)
-                  console.log(bullet);
-                  lastFired = time + 300;
-              }
-          }
+//           if (isMouseDown == true && time > lastFired) {
+//               let bullet = bullets.get();
+//               if (bullet){
+//                   bullet.fire(px, py);
+//                   bullet.setScale(this.setScaleX, this.setScaleY)
+//                   console.log(bullet);
+//                   lastFired = time + 300;
+//               }
+//           }
 
-        //   console.log(bullets.get());
+//         //   console.log(bullets.get());
 
-        // if (this.isShooting == true && time > this.entityLastFired) {
-        //     let bullet = null
-        //     bullet = this.entityBulletsGroup.get()
-        //     bullet.fire(ex, ey, px, py);
-        //     if (bullet) {
-        //         this.entityLastFired = time + 200;
-        //     }
-        // }
+//         // if (this.isShooting == true && time > this.entityLastFired) {
+//         //     let bullet = null
+//         //     bullet = this.entityBulletsGroup.get()
+//         //     bullet.fire(ex, ey, px, py);
+//         //     if (bullet) {
+//         //         this.entityLastFired = time + 200;
+//         //     }
+//         // }
 
-        // if (this.isShooting) {
-        //     let bullet = null
-        //     bullet = this.entityBulletsGroup.get();
-        //     bullet.seizeFire()
-        // }
-    }
+//         // if (this.isShooting) {
+//         //     let bullet = null
+//         //     bullet = this.entityBulletsGroup.get();
+//         //     bullet.seizeFire()
+//         // }
+//     }
 
-}
+// }
 
 
 let initBulletClass = {
@@ -113,16 +172,16 @@ let initBulletClass = {
         
       },
   
-    fire: function (x, y) {
-      this.setPosition(x, y);
+    fire: function (px, py, _pointer) {
+      this.setPosition(px, py);
       this.setActive(true);
       this.setVisible(true);
   
-      let pointer = this.scene.input.activePointer
+      let pointer = _pointer
       let toX = pointer.x
       let toY = pointer.y
-      let fromX = x
-      let fromY = y
+      let fromX = px
+      let fromY = py
   
       const d = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2))
   
