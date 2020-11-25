@@ -38,7 +38,7 @@ export class FirstGunProjectile extends Projectile {
 			let bullet = this.bullets.get();
 			if (bullet) {
 				bullet.fire(px, py, pointer);
-				bullet.setScale(6, 6)
+				bullet.setScale(1, 1)
 				lastFired = time + 100;
 			}
 		}
@@ -58,7 +58,7 @@ export class SecondGunProjectile extends Projectile {
 		this.Bullet = new Phaser.Class(initBulletClass2)
 		this.bullets = scene.add.group({
 			classType: this.Bullet,
-			maxSize: 1,
+			maxSize: 10,
 			runChildUpdate: true
 		})
   }
@@ -76,8 +76,8 @@ export class SecondGunProjectile extends Projectile {
 			let bullet = this.bullets.get();
 			if (bullet) {
 				bullet.fire(px, py, pointer);
-				bullet.setScale(11, 11)
-				lastFired = time + 40;
+				bullet.setScale(2, 2)
+				lastFired = time + 60;
 			}
 		}
 	}
@@ -159,82 +159,13 @@ export class FourthGunProjectile extends Projectile {
 	}
 }
 
+
 let initBulletClass = {
-    Extends: Phaser.GameObjects.Ellipse,
-    initialize:
-  
-      function Bullet(scene) {
-        Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 6, 6, "0xff0000")
-        this.bulletGroup = scene.physics.add.group({
-          angularDrag: 5,
-          angularVelocity: 60,
-          dragX: 10,
-          dragY: 10
-        })
-        this.bulletGroup.add(this)
-        this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
-        // this.playerSprite = playerSprite
-        
-      },
-  
-    fire: function (px, py, _pointer) {
-      this.setPosition(px, py);
-      this.setActive(true);
-      this.setVisible(true);
-  
-      let pointer = _pointer
-      let toX = pointer.x
-      let toY = pointer.y
-      let fromX = px
-      let fromY = py
-  
-      const d = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2))
-  
-      this.velX = this.speed / d * (toX - fromX)
-      this.velY = this.speed / d * (toY - fromY)
-    },
-
-    // setSize: function (width, height) {
-    //   this.width = width
-    //   this.height = height
-    // },
-  
-    update: function (time, delta) {
-      
-      this.bulletGroup.setVelocity(this.velX * delta, this.velY * delta)
-      
-      if (this.y < -50) {
-        this.setActive(false);
-        this.setVisible(false);
-      }
-      if (this.y > 768) {
-        this.setActive(false);
-        this.setVisible(false);
-      }
-      if (this.x > 1366) {
-        this.setActive(false);
-        this.setVisible(false);
-      }
-      if (this.x < 0 ) {
-        this.setActive(false);
-        this.setVisible(false);
-      }
-    }
-};
-let initBulletClass2 = {
-  Extends: Phaser.GameObjects.Ellipse,
-
-  bulletGroup: null,
-  playerSprite: null,
-  velX: null,
-  velY: null,
-  width: null,
-  height: null,
-
+  Extends: Phaser.GameObjects.Sprite,
   initialize:
 
     function Bullet(scene) {
-      Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 6, 6, "0xff0000")
+      Phaser.GameObjects.Sprite.call(this, scene, 0, 0, "sprite")
       this.bulletGroup = scene.physics.add.group({
         angularDrag: 5,
         angularVelocity: 60,
@@ -291,6 +222,70 @@ let initBulletClass2 = {
     }
   }
 };
+
+let initBulletClass2 = {
+  Extends: Phaser.GameObjects.Sprite,
+  initialize:
+
+    function Bullet(scene) {
+      Phaser.GameObjects.Sprite.call(this, scene, 0, 0, "sprite2")
+      this.bulletGroup = scene.physics.add.group({
+        angularDrag: 5,
+        angularVelocity: 60,
+        dragX: 10,
+        dragY: 10
+      })
+      this.bulletGroup.add(this)
+      this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
+      // this.playerSprite = playerSprite
+      
+    },
+
+  fire: function (px, py, _pointer) {
+    this.setPosition(px, py);
+    this.setActive(true);
+    this.setVisible(true);
+
+    let pointer = _pointer
+    let toX = pointer.x
+    let toY = pointer.y
+    let fromX = px
+    let fromY = py
+
+    const d = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2))
+
+    this.velX = this.speed / d * (toX - fromX)
+    this.velY = this.speed / d * (toY - fromY)
+  },
+
+  // setSize: function (width, height) {
+  //   this.width = width
+  //   this.height = height
+  // },
+
+  update: function (time, delta) {
+    
+    this.bulletGroup.setVelocity(this.velX * delta, this.velY * delta)
+    
+    if (this.y < -50) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+    if (this.y > 768) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+    if (this.x > 1366) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+    if (this.x < 0 ) {
+      this.setActive(false);
+      this.setVisible(false);
+    }
+  }
+};
+
 let initBulletClass3 = {
   Extends: Phaser.GameObjects.Ellipse,
 
