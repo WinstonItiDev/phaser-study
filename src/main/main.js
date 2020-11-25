@@ -17,7 +17,7 @@ const config = {
       BootScene,
       TitleScene,
       GameScene,
-      UIScene
+      UIScene,
     ],
     physics: {
       default: 'arcade',
