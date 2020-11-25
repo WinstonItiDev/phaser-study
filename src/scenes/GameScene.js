@@ -29,8 +29,6 @@ export class GameScene extends Phaser.Scene {
         console.log(this.thirdGun);
         console.log(this.fourthGun);
 
-
-
         // create pointer
         this.pointer = this.input.activePointer
         
@@ -68,11 +66,14 @@ export class GameScene extends Phaser.Scene {
                 rect.setStyleActive(rect.index == activeRect % rects.length)
             })
         })
-        // if (activeRect == 0) {
-        //     console.log("active 0")
-        // }
+        if (activeRect == 0) {
+            console.log("active 0")
+        }
+
 
     }
+
+    
 
     update(time, delta) {
         if (activeRect == 0) {
@@ -102,21 +103,3 @@ export class GameScene extends Phaser.Scene {
 
     }
 }
-
-// export class SceneA extends Phaser.Scene {
-//     constructor() {
-//         super('SceneA')
-//     }
-//     create() {
-//         console.log("SCENE_A");
-//     }
-// }
-
-// export class SceneB extends Phaser.Scene {
-//     constructor() {
-//         super('SceneB')
-//     }
-//     create() {
-//         console.log("SCENE_B");
-//     }
-// }
