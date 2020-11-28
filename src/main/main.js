@@ -4,6 +4,7 @@ import { BootScene } from '../scenes/BootScene'
 import { GameScene } from '../scenes/GameScene'
 import { TitleScene } from '../scenes/TitleScene'
 import { UIScene } from '../scenes/UIScene'
+import { FirstProjectileState, SecondProjectileState } from '../scenes/GameScene'
 
 const config = {
     type: Phaser.WEBGL,
@@ -17,7 +18,9 @@ const config = {
       BootScene,
       TitleScene,
       GameScene,
-      UIScene
+      UIScene,
+      FirstProjectileState,
+      SecondProjectileState
     ],
     physics: {
       default: 'arcade',

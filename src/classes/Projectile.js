@@ -17,12 +17,15 @@ class Projectile {
 	}
 }
 
-export class FirstGunProjectile extends Projectile {
+export class FirstProjectile extends Projectile {
 	constructor(scene) {
 		super()
 		// create customized bullet group
-		this.createBulletGroup(scene, initBulletClass, 10)
-		// bind functions to this class
+    this.createBulletGroup(scene, initBulletClass, 10)
+    // set timer
+    this.timer = new Phaser.Time.Clock(scene)
+
+    // bind functions to this class
 		this.update = this.update.bind(this)
 
 	}
@@ -48,18 +51,49 @@ export class FirstGunProjectile extends Projectile {
 	}
 }
 
-export class SecondGunProjectile extends Projectile {
+export class SecondProjectile extends Projectile {
 	constructor(scene) {
 		super()
 		// create customized bullet group
-		this.createBulletGroup(scene, initBulletClass, 3)
-		// log to see if bullet group is getting passed
-		console.log(this.getBulletGroup());
+		this.createBulletGroup(scene, initBulletClass, 4)
+		// bind functions to this class
+		this.update = this.update.bind(this)
+
 	}
-	getBulletGroup() {
-		return this.bullets
+
+	update(scene, time, px, py, pointer) {
+		scene.input.on('pointerdown', () => {
+			isMouseDown = true
+			
+		})
+
+		scene.input.on('pointerup', () => {
+			isMouseDown = false
+		})
+
+		if (isMouseDown == true && time > lastFired) {
+			let bullet = this.bullets.get();
+			if (bullet) {
+				bullet.fire(px, py, pointer);
+				bullet.setScale(20, 20)
+				lastFired = time + 70;
+			}
+		}
 	}
 }
+
+// export class SecondGunProjectile extends Projectile {
+// 	constructor(scene) {
+// 		super()
+// 		// create customized bullet group
+// 		this.createBulletGroup(scene, initBulletClass, 3)
+// 		// log to see if bullet group is getting passed
+// 		console.log(this.getBulletGroup());
+// 	}
+// 	getBulletGroup() {
+// 		return this.bullets
+// 	}
+// }
 
 // export class Projectile {
 //     constructor() {

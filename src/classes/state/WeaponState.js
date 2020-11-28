@@ -1,4 +1,39 @@
 
+class State {
+    enter() {}
+    execute() {}
+}
+
+import { FirstProjectile, SecondProjectile } from '../Projectile.js'
+
+export class FirstProjectileState extends State {
+    enter(scene) {
+        console.log("FIRST_STATE");
+        this.projectile = new FirstProjectile(scene)
+        console.log(this.pointer);
+        console.log(this.projectile);
+        
+    }
+
+    execute(scene, time) {
+        this.pointer = scene.input.activePointer
+        this.projectile.update(scene, time, 0, 0, this.pointer)
+
+    }
+}
+
+export class SecondProjectileState extends State {
+    enter(scene) {
+        // this.projectile = new FirstGunProjectile(this)
+        // this.pointer = scene.input.activePointer
+
+    }
+
+    execute(scene) {
+        // this.projectile.update(scene, time, 0, 0, this.pointer)
+    }
+}
+
 
 // import { GameUi } from '../GameUi.js'
 
