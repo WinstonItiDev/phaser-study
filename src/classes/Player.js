@@ -15,7 +15,7 @@ export class Player {
         circleShape = this.circleShape
         circlePhysicsGroup = this.circlePhysicsGroup
 
-        playerSprite = game.add.sprite(undefined, undefined, sprite)
+        playerSprite = game.add.sprite(0, 0, sprite)
         playerPhysicsGroup = game.physics.add.group({})
         playerPhysicsGroup.add(playerSprite)
 
@@ -30,8 +30,6 @@ export class Player {
         this.update = this.update.bind(this)
         this.handleInput = this.handleInput.bind(this)
         this.getSprite = this.getSprite.bind(this)
-
-        createGun(game)
         
     }
 
@@ -57,8 +55,6 @@ export class Player {
         circleShape.y = playerSprite.y
         origin_marker.x = playerSprite.x
         origin_marker.y = playerSprite.y
-
-        updateGun(game, time)
         
     }
 
@@ -113,110 +109,110 @@ export class Player {
 
 }
 
-let bullets = null;
-let lastFired = 0;
-let isMouseDown = false
+// let bullets = null;
+// let lastFired = 0;
+// let isMouseDown = false
 
-export function createGun(game) {
+// export function createGun(game) {
 
-  let Bullet = new Phaser.Class(bulletClass)
+//   let Bullet = new Phaser.Class(bulletClass)
 
-  bullets = game.add.group({
-    classType: Bullet,
-    maxSize: 20,
-    runChildUpdate: true
-  });
+//   bullets = game.add.group({
+//     classType: Bullet,
+//     maxSize: 20,
+//     runChildUpdate: true
+//   });
   
-}
+// }
 
-export function getPlayerBullets() {
-    return bullets
-}
+// export function getPlayerBullets() {
+//     return bullets
+// }
 
-export function updateGun(game, time) {
+// export function updateGun(game, time) {
 
-  game.input.on('pointerdown', () => {
-    isMouseDown = true
-  })
+//   game.input.on('pointerdown', () => {
+//     isMouseDown = true
+//   })
 
-  game.input.on('pointerup', () => {
-    isMouseDown = false
-  })
+//   game.input.on('pointerup', () => {
+//     isMouseDown = false
+//   })
 
-  if (isMouseDown == true && time > lastFired) {
-      let bullet = bullets.get();
+//   if (isMouseDown == true && time > lastFired) {
+//       let bullet = bullets.get();
 
-      if (bullet){
-          bullet.fire(playerSprite.x, playerSprite.y);
-          lastFired = time + 300;
-      }
-  }
-}
+//       if (bullet){
+//           bullet.fire(playerSprite.x, playerSprite.y);
+//           lastFired = time + 300;
+//       }
+//   }
+// }
 
-let bulletClass = {
-  Extends: Phaser.GameObjects.Ellipse,
+// let bulletClass = {
+//   Extends: Phaser.GameObjects.Ellipse,
 
-  bulletGroup: null,
-  playerSprite: null,
-  velX: null,
-  velY: null,
+//   bulletGroup: null,
+//   playerSprite: null,
+//   velX: null,
+//   velY: null,
 
-  initialize:
+//   initialize:
 
-    function Bullet(scene) {
-      Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 10, 10, "0xff0000")
-      this.bulletGroup = scene.physics.add.group({
-        angularDrag: 5,
-        angularVelocity: 60,
-        dragX: 10,
-        dragY: 10
-      })
-      this.bulletGroup.add(this)
-      this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
-      this.playerSprite = playerSprite
+//     function Bullet(scene) {
+//       Phaser.GameObjects.Ellipse.call(this, scene, 0, 0, 10, 10, "0xff0000")
+//       this.bulletGroup = scene.physics.add.group({
+//         angularDrag: 5,
+//         angularVelocity: 60,
+//         dragX: 10,
+//         dragY: 10
+//       })
+//       this.bulletGroup.add(this)
+//       this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
+//       this.playerSprite = playerSprite
       
-    },
+//     },
 
-  fire: function (x, y) {
-    this.setPosition(x, y);
-    this.setActive(true);
-    this.setVisible(true);
+//   fire: function (x, y) {
+//     this.setPosition(x, y);
+//     this.setActive(true);
+//     this.setVisible(true);
 
-    let pointer = this.scene.input.activePointer
-    let toX = pointer.x
-    let toY = pointer.y
-    let fromX = x
-    let fromY = y
+//     let pointer = this.scene.input.activePointer
+//     let toX = pointer.x
+//     let toY = pointer.y
+//     let fromX = x
+//     let fromY = y
 
-    const d = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2))
+//     const d = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2))
 
-    this.velX = this.speed / d * (toX - fromX)
-    this.velY = this.speed / d * (toY - fromY)
-  },
+//     this.velX = this.speed / d * (toX - fromX)
+//     this.velY = this.speed / d * (toY - fromY)
+//   },
 
-  update: function (time, delta) {
+//   update: function (time, delta) {
     
-    this.bulletGroup.setVelocity(this.velX * delta, this.velY * delta)
+//     this.bulletGroup.setVelocity(this.velX * delta, this.velY * delta)
     
-    if (this.y < -50) {
-      this.setActive(false);
-      this.setVisible(false);
-    }
-    if (this.y > 768) {
-      this.setActive(false);
-      this.setVisible(false);
-    }
-    if (this.x > 1366) {
-      this.setActive(false);
-      this.setVisible(false);
-    }
-    if (this.x < 0 ) {
-      this.setActive(false);
-      this.setVisible(false);
-    }
-  }
+//     if (this.y < -50) {
+//       this.setActive(false);
+//       this.setVisible(false);
+//     }
+//     if (this.y > 768) {
+//       this.setActive(false);
+//       this.setVisible(false);
+//     }
+//     if (this.x > 1366) {
+//       this.setActive(false);
+//       this.setVisible(false);
+//     }
+//     if (this.x < 0 ) {
+//       this.setActive(false);
+//       this.setVisible(false);
+//     }
+//   }
 
-};
+// };
 
 
 // import Phaser from 'phaser'

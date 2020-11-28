@@ -6,8 +6,8 @@ export class BootScene extends Phaser.Scene {
 
     preload() {
         // Holds all assets (sprites, sound)
-        // this.load.image('sprite', 'assets/sprites/sprite.png')
-        // this.load.image('sprite2', 'assets/sprites/sprite2.png')
+        this.load.image('sprite', 'assets/sprites/sprite.png')
+        this.load.image('sprite2', 'assets/sprites/sprite2.png')
 
         // preload tileset asset
         this.load.image("tiles", "assets/tilemaps/tiles/firstTileset.png")

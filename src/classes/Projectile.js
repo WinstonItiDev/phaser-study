@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 let lastFired = 0
 let isMouseDown = false
-
+let num = null
 class Projectile {
 }
 
@@ -13,7 +13,11 @@ export class FirstGunProjectile extends Projectile {
 		// this.createBulletGroup(scene, initBulletClass, 10)
     // bind functions to this class
     this.createBulletGroup = this.createBulletGroup.bind(this)
-		this.update = this.update.bind(this)
+    this.update = this.update.bind(this)
+    this.clear = this.clear.bind(this)
+    this.getBulletGroup = this.getBulletGroup.bind(this)
+
+
 
 	}
 	createBulletGroup(scene) {
@@ -22,9 +26,15 @@ export class FirstGunProjectile extends Projectile {
 			classType: this.Bullet,
 			maxSize: 30,
 			runChildUpdate: true
-		})
+    })
+
+    num = this.bullets.maxSize
+
+
+    
+
   }
-	update(scene, time, px, py, pointer) {
+	update(scene, time, px, py, pointer, text) {
 		scene.input.on('pointerdown', () => {
 			isMouseDown = true
 			
@@ -39,10 +49,31 @@ export class FirstGunProjectile extends Projectile {
 			if (bullet) {
 				bullet.fire(px, py, pointer);
 				bullet.setScale(1, 1)
-				lastFired = time + 100;
+        lastFired = time + 100;
+        num = num - 1
+        text.setText(num)
 			}
-		}
-	}
+    }
+    
+    // if(len > 4) {
+    //   this.bullets.setActive(false)
+    // }
+    // if (this.bullets.countActive() == 30) {
+    //   this.bullets.get()
+    //   bullet.children.size = 0
+    // }
+
+  }
+
+  clear() {
+      let bullet = this.bullets.get();
+      bullet.clear()
+			
+  }
+
+  getBulletGroup() {
+    return this.bullets
+  }
 }
 export class SecondGunProjectile extends Projectile {
 	constructor() {
@@ -155,7 +186,8 @@ export class FourthGunProjectile extends Projectile {
 				bullet.setScale(10, 10)
 				lastFired = time + 40;
 			}
-		}
+    }
+    
 	}
 }
 
@@ -174,7 +206,6 @@ let initBulletClass = {
       })
       this.bulletGroup.add(this)
       this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
-      // this.playerSprite = playerSprite
       
     },
 
@@ -195,32 +226,33 @@ let initBulletClass = {
     this.velY = this.speed / d * (toY - fromY)
   },
 
-  // setSize: function (width, height) {
-  //   this.width = width
-  //   this.height = height
-  // },
-
   update: function (time, delta) {
     
     this.bulletGroup.setVelocity(this.velX * delta, this.velY * delta)
     
     if (this.y < -50) {
-      this.setActive(false);
+      // this.setActive(false);
       this.setVisible(false);
     }
     if (this.y > 768) {
-      this.setActive(false);
+      // this.setActive(false);
       this.setVisible(false);
     }
     if (this.x > 1366) {
-      this.setActive(false);
+      // this.setActive(false);
       this.setVisible(false);
     }
     if (this.x < 0 ) {
-      this.setActive(false);
+      // this.setActive(false);
       this.setVisible(false);
     }
+  },
+
+  clear: function () {
+    this.setActive(false)
   }
+
+
 };
 
 let initBulletClass2 = {
@@ -377,7 +409,7 @@ let initBulletClass4 = {
         dragY: 10
       })
       this.bulletGroup.add(this)
-      this.speed = Phaser.Math.GetSpeed(400 * 200, 1);
+      this.speed = Phaser.Math.GetSpeed(400 * 200, 90);
       // this.playerSprite = playerSprite
       
     },

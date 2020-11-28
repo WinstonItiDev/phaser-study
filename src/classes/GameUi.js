@@ -27,6 +27,7 @@ export class GameUi extends Phaser.GameObjects.Rectangle {
         scene.add.existing(this);
 
         this.setStrokeStyle(4, 0xefc53f);
+        this.setScrollFactor(0)
         this.setFillStyle(this.normalFill, 1)
             .setInteractive()
             // .on('pointerover', () => {
