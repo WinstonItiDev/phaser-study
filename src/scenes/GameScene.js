@@ -18,28 +18,37 @@ let activeRect = null
 let bulletCount = null
 let num = null
 
+let map = null
 export class GameScene extends Phaser.Scene {
     constructor() {
         super('Game')
     }
     create() {
-
+        // create fadein
+        this.cameras.main.fadeIn(1000, 0, 0, 0)
         // create input
         this.keys = this.input.keyboard.addKeys('W, S, A, D')
         // create tilemap
-        this.map = this.make.tilemap({
-            key: 'tilemap',
-            tileWidth: 64,
-            tileHeight: 64
-        })
-        this.tileset = this.map.addTilesetImage("tiles")
-        this.collisionLayer = this.map.createStaticLayer(0, this.tileset, 0, 0)
-        this.map.setCollision(0, true)
+        map = this.add.tilemap('tilemap1');
+        let tiles = map.addTilesetImage('tileset1');
+        let layer = map.createDynamicLayer(0, tiles);
+
+        // layer.setScale(0.5, 0.5);
+        // this.layer.setScale(3);
+
+        // this.map = this.make.tilemap({
+        //     key: 'tilemap',
+        //     tileWidth: 64,
+        //     tileHeight: 64
+        // })
+        // this.tileset = this.map.addTilesetImage("tiles")
+        // this.collisionLayer = this.map.createStaticLayer(0, this.tileset, 0, 0)
+        // this.map.setCollision(0, true)
 
         // create player
         this.player = new Player(this, '')
         this.player.setVicinityCircle(30)
-        this.player.setPosition(400, 300)
+        this.player.setPosition(50, 50)
 
         // create tools
         this.firstGun = new FirstGunProjectile()
@@ -55,7 +64,7 @@ export class GameScene extends Phaser.Scene {
         this.fourthGun.createBulletGroup(this)
 
         console.log(this.firstGun);
-        
+
         // create camera
         this.cameras.main.startFollow(this.player.getSprite(), true, 0.08, 0.08);
         bulletCount = this.add.text(20, 20, "30")
@@ -103,7 +112,7 @@ export class GameScene extends Phaser.Scene {
             })
         })
 
-        
+
 
     }
     update(time, delta) {
@@ -112,6 +121,9 @@ export class GameScene extends Phaser.Scene {
 
         this.player.update(this, time)
         this.player.handleInput(this.keys, delta)
+
+        let player = this.player.getSprite()
+        console.log(player.x, player.y);
 
         //count how many bullets are being used
         // if bullets used is over 30
@@ -122,7 +134,7 @@ export class GameScene extends Phaser.Scene {
         }
 
         if (activeRect == 0) {
-            
+
 
             this.firstGun.update(this, time, this.player.getSprite().x, this.player.getSprite().y, this.pointer, bulletCount)
 

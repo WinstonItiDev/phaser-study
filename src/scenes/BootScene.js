@@ -10,9 +10,9 @@ export class BootScene extends Phaser.Scene {
         this.load.image('sprite2', 'assets/sprites/sprite2.png')
 
         // preload tileset asset
-        this.load.image("tiles", "assets/tilemaps/tiles/firstTileset.png")
+        this.load.image("tileset1", "assets/tilemaps/tiles/tileset1.png")
         // preload tilemap asset
-        this.load.tilemapCSV("tilemap", "assets/tilemaps/maps/tilemap1.csv" )
+        this.load.tilemapTiledJSON("tilemap1", "assets/tilemaps/maps/tilemap1.json" )
 
     }
 
